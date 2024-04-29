@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\keuangan;
 use Illuminate\Http\Request;
 
 class KeuanganController extends Controller
@@ -11,7 +12,8 @@ class KeuanganController extends Controller
      */
     public function index()
     {
-        //
+        $keuangan = keuangan::all();
+        return view('keuangan.index', compact('keuangan'));
     }
 
     /**
@@ -19,7 +21,7 @@ class KeuanganController extends Controller
      */
     public function create()
     {
-        //
+        return view('keuangan.create');
     }
 
     /**
@@ -27,7 +29,8 @@ class KeuanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        keuangan::create($request->all());
+        return redirect()->route('keuangan')->with('Success', 'Data keuangan berhasil ditambahkan');
     }
 
     /**
@@ -35,7 +38,8 @@ class KeuanganController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $keuangan = keuangan::find($id);
+        return view('keuangan.show', compact('keuangan'));
     }
 
     /**
@@ -43,7 +47,8 @@ class KeuanganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $keuangan = keuangan::find($id);
+        return view('keuangan.edit', compact('keuangan'));
     }
 
     /**
@@ -51,7 +56,9 @@ class KeuanganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $keuangan = keuangan::find($id);
+        $keuangan->update($request->all());
+        return redirect()->route('keuangan')->with('Success', 'Data keuangan berhasil diubah');
     }
 
     /**
@@ -59,6 +66,8 @@ class KeuanganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $keuangan = keuangan::find($id);
+        $keuangan->delete();
+        return redirect()->route('keuangan')->with('Success', 'Data keuangan berhasil dihapus');
     }
 }

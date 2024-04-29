@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonasiController;
@@ -73,6 +74,16 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('donasi.edit');
         Route::put('edit/{id}', 'update')->name('donasi.update');
         Route::delete('destroy/{id}', 'destroy')->name('donasi.destroy');
+    });
+
+    Route::controller(ArtikelController::class)->prefix('artikel')->group(function () {
+        Route::get('', 'index')->name('artikel');
+        Route::get('create', 'create')->name('artikel.create');
+        Route::post('store', 'store')->name('artikel.store');
+        Route::get('show/{id}', 'show')->name('artikel.show');
+        Route::get('edit/{id}', 'edit')->name('artikel.edit');
+        Route::put('edit/{id}', 'update')->name('artikel.update');
+        Route::delete('destroy/{id}', 'destroy')->name('artikel.destroy');
     });
 
 
