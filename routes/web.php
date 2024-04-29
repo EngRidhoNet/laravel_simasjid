@@ -6,7 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\JamaahController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\MasjidController;
+use App\Http\Controllers\PengurusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +22,7 @@ use App\Http\Controllers\MasjidController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
 
 Route::controller(AuthController::class)->group(function(){
@@ -35,7 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
     Route::controller(JamaahController::class)->prefix('jamaah')->group(function () {
         Route::get('', 'index')->name('jamaah');
         Route::get('create', 'create')->name('jamaah.create');
@@ -84,6 +85,26 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('artikel.edit');
         Route::put('edit/{id}', 'update')->name('artikel.update');
         Route::delete('destroy/{id}', 'destroy')->name('artikel.destroy');
+    });
+
+    Route::controller(KeuanganController::class)->prefix('keuangan')->group(function () {
+        Route::get('', 'index')->name('keuangan');
+        Route::get('create', 'create')->name('keuangan.create');
+        Route::post('store', 'store')->name('keuangan.store');
+        Route::get('show/{id}', 'show')->name('keuangan.show');
+        Route::get('edit/{id}', 'edit')->name('keuangan.edit');
+        Route::put('edit/{id}', 'update')->name('keuangan.update');
+        Route::delete('destroy/{id}', 'destroy')->name('keuangan.destroy');
+    });
+
+    Route::controller(PengurusController::class)->prefix('pengurus')->group(function () {
+        Route::get('', 'index')->name('pengurus');
+        Route::get('create', 'create')->name('pengurus.create');
+        Route::post('store', 'store')->name('pengurus.store');
+        Route::get('show/{id}', 'show')->name('pengurus.show');
+        Route::get('edit/{id}', 'edit')->name('pengurus.edit');
+        Route::put('edit/{id}', 'update')->name('pengurus.update');
+        Route::delete('destroy/{id}', 'destroy')->name('pengurus.destroy');
     });
 
 

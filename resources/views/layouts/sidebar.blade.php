@@ -33,7 +33,7 @@
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('kegiatan') }}">
-           <i class="fas fa-tasks"></i>
+            <i class="fas fa-tasks"></i>
             <span>kegiatan</span></a>
     </li>
 
@@ -41,6 +41,18 @@
         <a class="nav-link" href="{{ route('donasi') }}">
             <i class="fas fa-hand-holding-usd"></i>
             <span>Donasi</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('artikel') }}">
+            <i class="fas fa-newspaper"></i>
+            <span>Artikel</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pengurus') }}">
+            <i class="fas fa-newspaper"></i>
+            <span>Pengurus</span></a>
     </li>
 
     <li class="nav-item">

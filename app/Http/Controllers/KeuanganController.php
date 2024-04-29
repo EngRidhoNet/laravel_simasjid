@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Masjid;
 use App\Models\keuangan;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,9 @@ class KeuanganController extends Controller
      */
     public function create()
     {
-        return view('keuangan.create');
+        $masjids = Masjid::all(); // Ambil semua data masjid untuk ditampilkan dalam dropdown
+
+        return view('keuangan.create', compact('masjids'));
     }
 
     /**
