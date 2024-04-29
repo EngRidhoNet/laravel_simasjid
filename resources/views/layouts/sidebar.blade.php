@@ -38,6 +38,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('donasi') }}">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Donasi</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="/profile">
             <i class="fa fa-street-view"></i>
             <span>Profile</span></a>
