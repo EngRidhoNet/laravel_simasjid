@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Masjid;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,9 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        //
+        $masjids = Masjid::all(); // Fetch all masjids
+        return view('kegiatan.create', compact('masjids'));
+
     }
 
     /**
@@ -29,7 +32,33 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_masjid' => 'required|integer|exists:table_masjid,id',
+            'nama_kegiatan' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'tanggal' => 'required|date',
+            'waktu_mulai' => 'required',
+            'waktu_selesai' => 'required',
+            'tempat' => 'required|string|max:255',
+            'foto_kegiatan' => 'nullable|image|max:2048', // Adjust max file size as needed
+        ]);
+
+        // Handle file upload (if any)
+        if ($request->hasFile('foto_kegiatan')) {
+            $fileName = time() . '.' . $request->foto_kegiatan->getClientOriginalExtension();
+            $filePath = storage_path('public/kegiatan_images/' . $fileName);
+            $request->file('foto_kegiatan')->storeAs('public/kegiatan_images', $fileName);
+            $validatedData['foto_kegiatan'] = $fileName; // Save filename in database
+        }
+
+        // Create new Kegiatan instance and save
+        $kegiatan = new Kegiatan;
+        $kegiatan->fill($validatedData);
+        $kegiatan->save();
+
+        // Flash success message and redirect back
+        session()->flash('success', 'Kegiatan baru berhasil ditambahkan!');
+        return redirect()->route('kegiatan');
     }
 
     /**
@@ -37,7 +66,8 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $kegiatan = Kegiatan::findOrFail($id);
+        return view('kegiatan.show', compact('kegiatan'));
     }
 
     /**
@@ -45,7 +75,9 @@ class KegiatanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $kegiatan = Kegiatan::findOrFail($id);
+        $masjids = Masjid::all(); // Fetch all masjids
+        return view('kegiatan.edit', compact('kegiatan','masjids'));
     }
 
     /**
@@ -53,7 +85,32 @@ class KegiatanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $kegiatan = Kegiatan::findOrFail($id);
+        $validatedData = $request->validate([
+            'id_masjid' =>'required|integer|exists:table_masjid,id',
+            'nama_kegiatan' =>'required|string|max:255',
+            'deskripsi' =>'required|string',
+            'tanggal' =>'required|date',
+            'waktu_mulai' =>'required',
+            'waktu_selesai' =>'required',
+            'tempat' =>'required|string|max:255',
+            'foto_kegiatan' => 'nullable|image|max:2048', // Adjust max file size as needed
+        ]);
+
+        // Handle file upload (if any)
+        if ($request->hasFile('foto_kegiatan')) {
+            $fileName = time() . '.' . $request->foto_kegiatan->getClientOriginalExtension();
+            $filePath = storage_path('public/kegiatan_images/' . $fileName);
+            $request->file('foto_kegiatan')->storeAs('public/kegiatan_images', $fileName);
+            $validatedData['foto_kegiatan'] = $fileName; // Save filename in database
+        }
+
+        $kegiatan->fill($validatedData);
+        $kegiatan->save();
+
+        // Flash success message and redirect back
+        session()->flash('success', 'Kegiatan berhasil diperbarui!');
+        return redirect()->route('kegiatan');
     }
 
     /**
@@ -61,6 +118,11 @@ class KegiatanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $kegiatan = Kegiatan::findOrFail($id);
+        $kegiatan->delete();
+
+        // Flash success message and redirect back
+        session()->flash('success', 'Kegiatan berhasil dihapus!');
+        return redirect()->route('kegiatan');
     }
 }

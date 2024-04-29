@@ -16,7 +16,7 @@
     <table class="table table-hover">
         <thead class="table-primary">
             <tr>
-                <th>#</th>
+                <th>No</th>
                 <th>nama</th>
                 <th>email</th>
                 <th>alamat</th>

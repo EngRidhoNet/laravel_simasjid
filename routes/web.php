@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JamaahController;
+use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\MasjidController;
 
 /*
@@ -53,14 +54,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('masjid.destroy');
     });
 
-    Route::controller(MasjidController::class)->prefix('masjid')->group(function () {
-        Route::get('', 'index')->name('masjid');
-        Route::get('create', 'create')->name('masjid.create');
-        Route::post('store', 'store')->name('masjid.store');
-        Route::get('show/{id}', 'show')->name('masjid.show');
-        Route::get('edit/{id}', 'edit')->name('masjid.edit');
-        Route::put('edit/{id}', 'update')->name('masjid.update');
-        Route::delete('destroy/{id}', 'destroy')->name('masjid.destroy');
+    Route::controller(KegiatanController::class)->prefix('kegiatan')->group(function () {
+        Route::get('', 'index')->name('kegiatan');
+        Route::get('create', 'create')->name('kegiatan.create');
+        Route::post('store', 'store')->name('kegiatan.store');
+        Route::get('show/{id}', 'show')->name('kegiatan.show');
+        Route::get('edit/{id}', 'edit')->name('kegiatan.edit');
+        Route::put('edit/{id}', 'update')->name('kegiatan.update');
+        Route::delete('destroy/{id}', 'destroy')->name('kegiatan.destroy');
     });
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
