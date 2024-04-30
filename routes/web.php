@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
         Route::get('about', 'about')->name('pages.about');
         Route::get('berita', 'berita')->name('pages.berita');
         Route::get('keuangan', 'keuangan')->name('pages.keuangan');
-        Route::get('donasi', 'donasi')->name('pages.donasi');
+        Route::get('kegiatan', 'kegiatan')->name('pages.kegiatan');
     });
 
 
