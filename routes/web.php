@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\JamaahController;
+use App\Http\Controllers\MasjidController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KeuanganController;
-use App\Http\Controllers\MasjidController;
 use App\Http\Controllers\PengurusController;
 
 /*
@@ -21,9 +22,9 @@ use App\Http\Controllers\PengurusController;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+// Route::get('/', function () {
+//     return view('pages.home');
+// });
 
 Route::controller(AuthController::class)->group(function(){
     Route::get('register','register')->name('register');
@@ -105,6 +106,14 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('pengurus.edit');
         Route::put('edit/{id}', 'update')->name('pengurus.update');
         Route::delete('destroy/{id}', 'destroy')->name('pengurus.destroy');
+    });
+
+    Route::controller(HomeController::class)->prefix('home')->group(function () {
+        Route::get('', 'index')->name('pages.home');
+        Route::get('about', 'about')->name('pages.about');
+        Route::get('berita', 'berita')->name('pages.berita');
+        Route::get('keuangan', 'keuangan')->name('pages.keuangan');
+        Route::get('donasi', 'donasi')->name('pages.donasi');
     });
 
 

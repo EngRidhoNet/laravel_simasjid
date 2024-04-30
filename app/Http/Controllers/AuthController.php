@@ -33,7 +33,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
-            'level' => 'Admin', // Mungkin seharusnya level user tidak selalu 'Admin'?
+            'level' => 'User', // Mungkin seharusnya level user tidak selalu 'Admin'?
         ]);
 
         return redirect()->route('login');
@@ -56,12 +56,13 @@ class AuthController extends Controller
                 'email' => trans('auth.failed')
             ]);
         }
-
         $request->session()->regenerate();
-
-        return redirect()->route('dashboard');
+        if (Auth::user()->level === 'Admin') {
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('pages.home');
+        }
     }
-
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();

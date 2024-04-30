@@ -18,4 +18,6 @@ class artikel extends Model
         'tanggal',
         'gambar'
     ];
+
+    
 }
